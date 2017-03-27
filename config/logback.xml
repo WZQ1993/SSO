@@ -1,0 +1,172 @@
+<configuration>
+    <!--寻找logback.xml-->
+
+    <!--logback首先在classpath寻找logback.groovy文件，-->
+    <!--如果没找到，继续寻找logback-test.xml文件-->
+    <!--如果没找到，继续寻找logback.xml文件-->
+    <!--如果仍然没找到，则使用默认配置（打印到控制台）-->
+    <!--<property resource="show-home.properties" />-->
+    <!--Logger: 日志记录器，把它关联到应用对应的context上后，主要用于存放日志对象，定义日志类型，级别。-->
+
+    <!--Appender：　指定日志输出的目的地，目的地可以是控制台，文件，或者数据库等-->
+
+    <!--Layout: 负责把事件转换成字符串，格式化日志信息的输出-->
+    <appender name="FILE" 
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>   
+        <File>work/log/app.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>work/log/app.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{MM/dd/yyyy HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+                </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+	<!--<appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">-->
+		<!--<smtpHost>smtp.163.com</smtpHost>-->
+		<!--<username>kgou7ac@163.com</username>-->
+		<!--<password>ac.2014</password>-->
+		<!--<to>kgou7ac@163.com</to>-->
+		<!--<from>kgou7ac@163.com</from>d-->
+		<!--<subject>[LOG] ${HOSTNAME} ${project.name} %logger{20} - %m</subject>-->
+		<!--<layout class="ch.qos.logback.classic.html.HTMLLayout">-->
+		<!--</layout>-->
+		<!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+			<!--<level>ERROR</level>-->
+		<!--</filter>-->
+	<!--</appender>-->
+	
+    <appender name="fxNsq" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>work/fx/fx.log</file>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+            <fileNamePattern>work/fx/fx.%d{yyyy-MM-dd}.log.gz</fileNamePattern>  
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{MM/dd/yyyy HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+                </pattern>
+        </encoder>  
+    </appender>  
+  
+    <logger name="FXNSQ" level="WARN" additivity="false">  
+        <appender-ref ref="fxNsq" />  
+    </logger> 
+    <!--系统运行状态-->
+    <appender name="stat" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>work/stat/stat.log</file>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+            <fileNamePattern>work/stat/%d{yyyyMMddHHmm }stat.log</fileNamePattern>  
+            <maxHistory>300</maxHistory>  
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{MM/dd/yyyy HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+                </pattern>
+        </encoder>  
+    </appender>  
+  
+    <logger name="STATLOG" level="WARN" additivity="false">  
+        <appender-ref ref="stat" />  
+    </logger> 
+
+	<appender name="focus"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>   
+        <File>work/focus/focus.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <FileNamePattern>work/focus/focus.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+                <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{MM/dd/yyyy HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+                </pattern>
+        </encoder>
+    </appender>
+    
+    <!--<logger name="com.kugou.show.task.fx" level="WARN" additivity="false">  -->
+        <!--<appender-ref ref="focus" />  -->
+    <!--</logger> -->
+    <!---->
+    <!--<logger name="com.kugou.core.fpush" level="WARN" additivity="false">  -->
+        <!--<appender-ref ref="focus" />  -->
+    <!--</logger> -->
+    <!---->
+     <!--<logger name="com.kugou.show.focus.PushHandler" level="WARN" additivity="false">  -->
+        <!--<appender-ref ref="focus" />  -->
+    <!--</logger> -->
+    
+    <appender name="finance" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>work/finance/finance.log</file>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+            <fileNamePattern>work/finance/finance.%d{yyyy-MM-dd}.log.gz</fileNamePattern>  
+            <maxHistory>30</maxHistory>  
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{MM/dd/yyyy HH:mm:ss} %-5level ${version} [%thread]%logger{16} - %msg%n
+                </pattern>
+        </encoder>  
+    </appender>  
+    <!--使用：private Logger financeLog = LoggerFactory.getLogger("FINANCELOG");-->
+    <logger name="FINANCELOG" level="WARN" additivity="false">  
+        <appender-ref ref="finance" />  
+    </logger>
+
+    <appender name="appender-metrics" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>work/metrics/metrics.log</File>
+        <BufferedIO>true</BufferedIO>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>work/metrics/metrics.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{MM/dd/yyyy HH:mm:ss} %logger{24} - %msg%n</pattern>
+        </layout>
+    </appender>
+    <logger name="logger-metrics" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="appender-metrics" />
+    </logger>
+
+    <!--elk请求日志-->
+    <!--<appender name="requestDetailKafkaAppender" class="com.kugou.mfx.elk.RequestDetailLogElkAppender">-->
+        <!--<layout class="com.kugou.logback.layout.KafkaPatternLayout">-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread%X{sourceThread}]%logger{24} - %msg%n</pattern>-->
+        <!--</layout>-->
+        <!--<logFieldConfig>group=fxmobile</logFieldConfig>-->
+        <!--<logFieldConfig>project=${project.name}</logFieldConfig>-->
+        <!--<logFieldConfig>log_type=access_log</logFieldConfig>-->
+        <!--<producerConfig>metadata.broker.list=${metadata.broker.list}</producerConfig>-->
+    <!--</appender>-->
+
+    <!--<logger name="com.kugou.mfx.elk.RequestLogContextFilter" level="WARN" additivity="false">-->
+        <!--<appender-ref ref="requestDetailKafkaAppender" />-->
+    <!--</logger>-->
+
+    <!--&lt;!&ndash;ELK普通日志&ndash;&gt;-->
+    <!--<appender name="genericKafkaAppender" class="com.kugou.mfx.elk.RequestWithIdLogElkAppender">-->
+        <!--<layout class="com.kugou.logback.layout.KafkaPatternLayout">-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread%X{sourceThread}]%logger{24} - %msg%n</pattern>-->
+        <!--</layout>-->
+        <!--<logFieldConfig>group=fxmobile</logFieldConfig>-->
+        <!--<logFieldConfig>project=${project.name}</logFieldConfig>-->
+        <!--<logFieldConfig>log_type=java_log</logFieldConfig>-->
+        <!--<producerConfig>metadata.broker.list=${metadata.broker.list}</producerConfig>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;=======elk appender end=====&ndash;&gt;-->
+
+    <!--<logger name="com.kugou.show" level="INFO" additivity="false">-->
+        <!--<appender-ref ref="FILE"/>-->
+        <!--<appender-ref ref="EMAIL" />-->
+        <!--<appender-ref ref="genericKafkaAppender" />-->
+    <!--</logger>-->
+
+    <!--INFO日志只输出到ELK,WARN日志输出到文件和ELK，ERROR输出到文件和、elk和email-->
+	<root level="WARN">
+		<appender-ref ref="FILE"/>
+	</root>
+</configuration>

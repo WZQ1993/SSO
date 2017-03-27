@@ -1,0 +1,75 @@
+group 'com.ziqingwang'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+def springBootVersion='2.0.0.BUILD-SNAPSHOT'
+
+apply plugin: 'idea'
+idea.project.languageLevel = '1.8'
+buildscript{
+    //def springBootVersion='2.0.0.BUILD-SNAPSHOT'无法识别，应该是生命周期的问题
+    /**
+     * ext准确的说是Gradle领域对象的一个属性，
+     * 我们可以将自定义的属性添加到ext对象上，
+     * Build.gradle中的其它代码片段可以使用。
+     * 也可写在项目根目录下名为gradle.properties文件中
+     */
+    ext {
+        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+    }
+    repositories{
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        //构建脚本的依赖
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    repositories{
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies{
+        //基础
+        compile"org.springframework.boot:spring-boot-starter:${springBootVersion}"
+        compile"org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+        compile"org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        compile"org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+        //门面日志框架，spring-boot默认引用了logback，slf4j将绑定logback
+        compile "org.slf4j:slf4j-api:1.7.24"
+    }
+    //排除依赖
+    configurations {
+        //排除其他日志记录框架
+        all*.exclude group: 'commons-logging', module: 'commons-logging'
+        all*.exclude group: 'log4j', module: 'log4j'
+        all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+}
+project(':common'){
+    dependencies{
+        compile"org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+        compile "commons-codec:commons-codec:1.10"
+        compile "com.alibaba:fastjson:1.2.24"
+        compile "com.google.guava:guava:21.0"
+        compile "mysql:mysql-connector-java:6.0.4"
+    }
+}
+project(':server'){
+    dependencies{
+        compile project(':common')
+        compile"org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+        compile ("org.springframework.boot:spring-boot-starter-web:${springBootVersion}"){
+            exclude group: "spring-boot-starter-tomcat:${springBootVersion}"
+        }
+    }
+}

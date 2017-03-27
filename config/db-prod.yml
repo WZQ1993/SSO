@@ -1,0 +1,13 @@
+debug: false
+spring:
+  datasource:
+    user:
+      url:  jdbc:mysql://localhost:3306/user_db
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+    logic:
+      url:  jdbc:mysql://localhost:3306/logic_db
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver

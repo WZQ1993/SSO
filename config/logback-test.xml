@@ -1,0 +1,60 @@
+<configuration>
+    <!--<property resource="show-home.properties" />-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{MM/dd/yyyy HH:mm:ss} %-5level [%thread%X{sourceThread}]%logger{24} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+    <appender name="appender-metrics" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{MM/dd/yyyy HH:mm:ss} %logger{24} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--&lt;!&ndash;=======elk appender start=====&ndash;&gt;-->
+
+    <!--<appender name="requestDetailKafkaAppender" class="com.kugou.mfx.elk.RequestDetailLogElkAppender">-->
+        <!--<layout class="com.kugou.logback.layout.KafkaPatternLayout">-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread%X{sourceThread}]%logger{24} - %msg%n</pattern>-->
+        <!--</layout>-->
+        <!--<logFieldConfig>group=fxmobile</logFieldConfig>-->
+        <!--<logFieldConfig>project=${project.name}</logFieldConfig>-->
+        <!--<logFieldConfig>log_type=access_log</logFieldConfig>-->
+        <!--<producerConfig>metadata.broker.list=${metadata.broker.list}</producerConfig>-->
+
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;ELK普通日志&ndash;&gt;-->
+    <!--<appender name="genericKafkaAppender" class="com.kugou.mfx.elk.RequestWithIdLogElkAppender">-->
+        <!--<layout class="com.kugou.logback.layout.KafkaPatternLayout">-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread%X{sourceThread}]%logger{24} - %msg%n</pattern>-->
+        <!--</layout>-->
+        <!--<logFieldConfig>group=fxmobile</logFieldConfig>-->
+        <!--<logFieldConfig>project=${project.name}</logFieldConfig>-->
+        <!--<logFieldConfig>log_type=java_log</logFieldConfig>-->
+        <!--<producerConfig>metadata.broker.list=${metadata.broker.list}</producerConfig>-->
+
+    <!--</appender>-->
+
+    <!--=======elk appender end=====-->
+
+
+    <!--=======elk logger start=====-->
+
+    <!--<logger name="com.kugou.mfx.elk.RequestLogContextFilter" level="WARN" additivity="false">-->
+        <!--<appender-ref ref="requestDetailKafkaAppender" />-->
+    <!--</logger>-->
+
+    <logger name="logger-metrics" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="appender-metrics" />
+    </logger>
+
+	<root level="DEBUG">
+        <!--spring-boot 默认的样式很清晰-->
+		<appender-ref ref="STDOUT" />
+        <!--<appender-ref ref="genericKafkaAppender" />-->
+	</root>
+
+</configuration>

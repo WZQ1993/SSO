@@ -1,0 +1,29 @@
+debug: true
+spring:
+  datasource:
+    user:
+      url:  jdbc:mysql://localhost:3306/db_user
+      username: root
+      password: wangziqing126
+      driver-class-name: com.mysql.jdbc.Driver
+    logic:
+      url:  jdbc:mysql://localhost:3306/db_logic
+      username: root
+      password: wangziqing126
+      driver-class-name: com.mysql.jdbc.Driver
+server:
+  port: 8443
+  ssl:
+#  文件不能放在res的config文件夹中
+    key-store: classpath:server.jks
+    key-store-password: wangziqing126
+    key-password: wangziqing126
+#custom:
+#  tomcat:
+#      https:
+#        port: 8443
+#        secure: true
+#        scheme: https
+#        ssl: true
+#        keystore: classpath:.keystore
+#        keystore-password: wangziqing126
